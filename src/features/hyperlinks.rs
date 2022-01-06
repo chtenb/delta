@@ -60,9 +60,8 @@ pub fn format_osc8_file_hyperlink<'a>(
     text: &str,
     config: &Config,
 ) -> Cow<'a, str> {
-    if let Some(GitConfigEntry::Path(workdir)) = config.git_config_entries.get("delta.__workdir__")
-    {
-        let absolute_path = workdir.join(relative_path);
+    if let Some(cwd) = &config.cwd {
+        let absolute_path = cwd.join(relative_path);
         let mut url = config
             .hyperlinks_file_link_format
             .replace("{path}", &absolute_path.to_string_lossy());
